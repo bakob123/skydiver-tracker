@@ -4,11 +4,14 @@ import com.skydivetracker.flight.models.Flight;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Entity
@@ -16,7 +19,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @Table(name = "skydivers")
-public class Skydiver {
+public class Skydiver implements UserDetails {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,12 +28,18 @@ public class Skydiver {
   @Column(unique = true, length = 50)
   private String username;
   @NotBlank
+  private String firstName;
+  @NotBlank
+  private String lastName;
+  @NotBlank
   @Column(unique = true)
   private String email;
+  @NotBlank
+  private String password;
   @NotNull
   private Integer estimatedJumps;
   @NotNull
-  private Date estimatedStay;
+  private Long estimatedStay;
   @NotNull
   private Integer preferredHeight;
   @ManyToMany
@@ -43,5 +52,34 @@ public class Skydiver {
   private List<Flight> flights;
   private boolean available;
   private boolean admin;
+
+  public Skydiver() {
+    this.flights = new ArrayList<>();
+  }
+
+  @Override
+  public Collection<? extends GrantedAuthority> getAuthorities() {
+    return null;
+  }
+
+  @Override
+  public boolean isAccountNonExpired() {
+    return false;
+  }
+
+  @Override
+  public boolean isAccountNonLocked() {
+    return false;
+  }
+
+  @Override
+  public boolean isCredentialsNonExpired() {
+    return false;
+  }
+
+  @Override
+  public boolean isEnabled() {
+    return false;
+  }
 
 }
