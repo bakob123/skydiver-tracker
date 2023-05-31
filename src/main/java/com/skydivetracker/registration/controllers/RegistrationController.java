@@ -20,7 +20,7 @@ public class RegistrationController {
   private RegistrationService registrationService;
 
   @PostMapping("/register")
-  public ResponseEntity<?> register(@Valid @RequestBody RegistrationDTO registrationDTO) {
+  public ResponseEntity<?> register(@Valid @RequestBody RegistrationDTO registrationDTO) { //TODO: test
     try {
       return ResponseEntity.status(HttpStatus.CREATED).body(registrationService.register(registrationDTO));
     } catch (AlreadyTakenException e) {

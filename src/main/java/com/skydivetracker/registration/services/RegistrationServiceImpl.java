@@ -19,13 +19,22 @@ public class RegistrationServiceImpl implements RegistrationService {
   private PasswordService passwordService;
 
   @Override
-  public RegistrationResponseDTO register(RegistrationDTO registrationDTO) {
+  public RegistrationResponseDTO register(RegistrationDTO registrationDTO) throws AlreadyTakenException {
     validate(registrationDTO);
     Skydiver skydiver = skydiverRepository.save(convertToSkydiver(registrationDTO));
-    return new RegistrationResponseDTO(skydiver.getUsername());
-  } //TODO TEST
+    return new RegistrationResponseDTO(skydiver.getUsername(), skydiver.getEmail());
+  }
 
-  private Skydiver convertToSkydiver(RegistrationDTO registrationDTO) {
+  public void validate(RegistrationDTO registrationDTO) throws AlreadyTakenException {
+    if (skydiverRepository.findByUsername(registrationDTO.getUsername()).isPresent()) {
+      throw new AlreadyTakenException("Username is already in use.");
+    }
+    if (skydiverRepository.findByEmail(registrationDTO.getEmail()).isPresent()) {
+      throw new AlreadyTakenException("Email is already in use.");
+    }
+  }
+
+  public Skydiver convertToSkydiver(RegistrationDTO registrationDTO) {
     return new Skydiver
         (
             null,
@@ -43,13 +52,5 @@ public class RegistrationServiceImpl implements RegistrationService {
         );
   }
 
-  private void validate(RegistrationDTO registrationDTO) {
-    if (skydiverRepository.findByUsername(registrationDTO.getUsername()).isPresent()) {
-      throw new AlreadyTakenException("Username is already in use.");
-    }
-    if (skydiverRepository.findByEmail(registrationDTO.getEmail()).isPresent()) {
-      throw new AlreadyTakenException("Email is already in use.");
-    }
-  }
 
 }

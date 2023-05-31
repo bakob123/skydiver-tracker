@@ -2,6 +2,7 @@ package com.skydivetracker.skydivers.models;
 
 import com.skydivetracker.flight.models.Flight;
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
@@ -18,6 +19,7 @@ import java.util.List;
 @Getter
 @Setter
 @AllArgsConstructor
+@EqualsAndHashCode
 @Table(name = "skydivers")
 public class Skydiver implements UserDetails {
 
