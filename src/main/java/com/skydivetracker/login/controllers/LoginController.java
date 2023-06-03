@@ -20,7 +20,7 @@ public class LoginController {
   private LoginService loginService;
 
   @PostMapping("/login")
-  public ResponseEntity<?> login(@RequestBody @Valid LoginDTO loginDTO) { //TODO: test
+  public ResponseEntity<?> login(@RequestBody @Valid LoginDTO loginDTO) {
     try {
       return ResponseEntity.status(HttpStatus.OK).body(loginService.login(loginDTO));
     } catch (InvalidUserDataException e) {

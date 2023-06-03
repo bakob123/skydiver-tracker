@@ -25,7 +25,7 @@ public class LoginServiceImpl implements LoginService {
   private JwtTokenUtil jwtTokenUtil;
 
   @Override
-  public LoginResponseDTO login(LoginDTO loginDTO) { //TODO test
+  public LoginResponseDTO login(LoginDTO loginDTO) {
     Skydiver skydiver;
     try {
       skydiver = skydiverService.getByUsername(loginDTO.getUsername());

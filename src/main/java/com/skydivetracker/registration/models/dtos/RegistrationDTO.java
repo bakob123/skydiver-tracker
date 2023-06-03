@@ -13,7 +13,7 @@ public class RegistrationDTO {
 
   @NotBlank
   @Size(message = "Username can not be longer than 50 characters.", max = 50)
-  private String username;
+  private String username; //TODO: add regex
   @NotBlank
   private String firstName;
   @NotBlank
