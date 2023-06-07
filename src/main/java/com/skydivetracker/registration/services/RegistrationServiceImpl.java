@@ -1,5 +1,6 @@
 package com.skydivetracker.registration.services;
 
+import com.skydivetracker.email.EmailService;
 import com.skydivetracker.errorhandling.exceptions.AlreadyTakenException;
 import com.skydivetracker.registration.models.dtos.RegistrationDTO;
 import com.skydivetracker.registration.models.dtos.RegistrationResponseDTO;
@@ -9,6 +10,7 @@ import com.skydivetracker.skydivers.repositories.SkydiverRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -18,14 +20,17 @@ public class RegistrationServiceImpl implements RegistrationService {
 
   private SkydiverRepository skydiverRepository;
   private PasswordService passwordService;
+  private EmailService emailService;
 
   @Override
-  public RegistrationResponseDTO register(RegistrationDTO registrationDTO) throws AlreadyTakenException {
+  public RegistrationResponseDTO register(RegistrationDTO registrationDTO) throws AlreadyTakenException, MessagingException {
     validate(registrationDTO);
     Skydiver skydiver = skydiverRepository.save(convertToSkydiver(registrationDTO));
+    emailService.send(emailService.createVerificationMail(skydiver));
     return new RegistrationResponseDTO(skydiver.getUsername(), skydiver.getEmail());
   }
 
+  @Override
   public void validate(RegistrationDTO registrationDTO) throws AlreadyTakenException {
     if (skydiverRepository.findByUsername(registrationDTO.getUsername()).isPresent()) {
       throw new AlreadyTakenException("Username is already in use.");

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://thymeleaf.org">
+<head>
+    <meta charset="UTF-8" content="text/html">
+</head>
+<body>
+<h2 th:text="|Hi ${name}!|"></h2>
+<p>To activate your Skydiver Tracker account, please click the link below:</p>
+<a th:href="|${protocol}://${host}:${port}/verify?token=${token}|"
+   style="border:2px;
+              border-radius:10px;
+              background-color: #1bcf4b;
+              font-weight: bold;
+              text-decoration: none;
+              display: inline-block;
+              text-align: center;
+              width: 70px;
+              height: 20px;">Activate</a>
+<br>
+<br>
+<p>The Skydiver Tracker Team</p>
+</body>
+</html>
