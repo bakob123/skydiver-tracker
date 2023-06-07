@@ -14,6 +14,7 @@ import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Getter
@@ -54,9 +55,12 @@ public class Skydiver implements UserDetails {
   private List<Flight> flights;
   private boolean available;
   private boolean admin;
+  @Column(name = "verification")
+  private UUID verificationToken;
 
   public Skydiver() {
     this.flights = new ArrayList<>();
+    this.verificationToken = UUID.randomUUID();
   }
 
   @Override

@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -48,7 +49,8 @@ public class RegistrationServiceImpl implements RegistrationService {
             0,
             new ArrayList<>(),
             false,
-            false
+            false,
+            UUID.randomUUID()
         );
   }
 
